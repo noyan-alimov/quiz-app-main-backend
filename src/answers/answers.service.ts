@@ -1,18 +1,17 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Quiz } from 'src/quizzes';
+import { QuizzesService } from 'src/quizzes/quizzes.service';
 import { Repository } from 'typeorm';
 import { CreateAnswerDto } from './dto/create-answer.dto';
 import { UpdateAnswerDto } from './dto/update-answer.dto';
-import { Answer } from './entities';
+import { Answer } from './entities/answer.entity';
 
 @Injectable()
 export class AnswersService {
   constructor(
     @InjectRepository(Answer)
     private answerRepository: Repository<Answer>,
-    @InjectRepository(Quiz)
-    private quizRepository: Repository<Quiz>
+    private quizzesService: QuizzesService
   ) {}
 
   async create(createAnswerDto: CreateAnswerDto): Promise<Answer> {
@@ -20,10 +19,7 @@ export class AnswersService {
     answer.answer = createAnswerDto.answer;
     answer.correct = createAnswerDto.correct;
 
-    const quiz = await this.quizRepository.findOne(createAnswerDto.quizId);
-    if (!quiz) {
-      throw new HttpException('Quiz not found', HttpStatus.NOT_FOUND);
-    }
+    const quiz = await this.quizzesService.findOne(createAnswerDto.quizId);
     answer.quiz = quiz;
 
     return this.answerRepository.save(answer);

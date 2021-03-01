@@ -5,10 +5,11 @@ import {
   Body,
   Put,
   Param,
-  Delete,
+  Delete
 } from '@nestjs/common';
 import { QuizzesService } from './quizzes.service';
-import { CreateQuizDto, UpdateQuizDto } from './dto';
+import { CreateQuizDto } from './dto/create-quiz.dto';
+import { UpdateQuizDto } from './dto/update-quiz.dto';
 
 @Controller('quizzes')
 export class QuizzesController {

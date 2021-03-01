@@ -1,4 +1,4 @@
-import { User } from 'src/users';
+import { User } from 'src/users/entities/user.entity';
 import {
   Column,
   Entity,
@@ -6,7 +6,7 @@ import {
   OneToMany,
   PrimaryGeneratedColumn
 } from 'typeorm';
-import { Answer } from '../../answers';
+import { Answer } from '../../answers/entities/answer.entity';
 
 @Entity()
 export class Quiz {
