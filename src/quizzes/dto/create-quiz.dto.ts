@@ -8,5 +8,5 @@ export class CreateQuizDto {
   question: string;
 
   @ApiProperty()
-  imageUrl?: string;
+  imageFileName?: string;
 }

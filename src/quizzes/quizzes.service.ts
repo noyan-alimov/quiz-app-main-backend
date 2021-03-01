@@ -5,6 +5,7 @@ import { Repository } from 'typeorm';
 import { CreateQuizDto } from './dto/create-quiz.dto';
 import { UpdateQuizDto } from './dto/update-quiz.dto';
 import { Quiz } from './entities/quiz.entity';
+import { imageGetSignedUrl } from './helpers/imageGetSignedUrl';
 
 @Injectable()
 export class QuizzesService {
@@ -19,8 +20,8 @@ export class QuizzesService {
 
     quiz.question = createQuizDto.question;
 
-    if (createQuizDto.imageUrl) {
-      quiz.imageurl = createQuizDto.imageUrl;
+    if (createQuizDto.imageFileName) {
+      quiz.imageurl = await imageGetSignedUrl(createQuizDto.imageFileName);
     }
 
     const user = await this.usersService.findOne(createQuizDto.userId);
@@ -52,8 +53,8 @@ export class QuizzesService {
       quiz.question = updateQuizDto.question;
     }
 
-    if (updateQuizDto.imageUrl) {
-      quiz.imageurl = updateQuizDto.imageUrl;
+    if (updateQuizDto.imageFileName) {
+      quiz.imageurl = updateQuizDto.imageFileName;
     }
 
     return this.quizRepository.save(quiz);
