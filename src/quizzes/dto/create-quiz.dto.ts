@@ -2,7 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateQuizDto {
   @ApiProperty()
-  userId: number;
+  userId: string;
 
   @ApiProperty()
   question: string;

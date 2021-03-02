@@ -1,6 +1,5 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { UsersService } from 'src/users/users.service';
 import { Repository } from 'typeorm';
 import { CreateQuizDto } from './dto/create-quiz.dto';
 import { UpdateQuizDto } from './dto/update-quiz.dto';
@@ -11,21 +10,18 @@ import { imageGetSignedUrl } from './helpers/imageGetSignedUrl';
 export class QuizzesService {
   constructor(
     @InjectRepository(Quiz)
-    private quizRepository: Repository<Quiz>,
-    private usersService: UsersService
+    private quizRepository: Repository<Quiz>
   ) {}
 
   async create(createQuizDto: CreateQuizDto): Promise<Quiz> {
     const quiz = new Quiz();
 
+    quiz.userId = createQuizDto.userId;
     quiz.question = createQuizDto.question;
 
     if (createQuizDto.imageFileName) {
       quiz.imageurl = await imageGetSignedUrl(createQuizDto.imageFileName);
     }
-
-    const user = await this.usersService.findOne(createQuizDto.userId);
-    quiz.user = user;
 
     return this.quizRepository.save(quiz);
   }
