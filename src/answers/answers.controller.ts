@@ -11,7 +11,10 @@ import {
 import { AuthGuard } from '@nestjs/passport';
 import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { AnswersService } from './answers.service';
-import { CreateAnswerDto } from './dto/create-answer.dto';
+import {
+  CreateAnswerDto,
+  CreateMultipleAnswersDto
+} from './dto/create-answer.dto';
 import { UpdateAnswerDto } from './dto/update-answer.dto';
 import { Answer } from './entities/answer.entity';
 
@@ -21,6 +24,15 @@ export class AnswersController {
   constructor(private readonly answersService: AnswersService) {}
 
   @Post()
+  @ApiCreatedResponse()
+  @UseGuards(AuthGuard('jwt'))
+  createMultipleAnswers(
+    @Body() createMultipleAnswersDto: CreateMultipleAnswersDto
+  ) {
+    return this.answersService.createMultipleAnswers(createMultipleAnswersDto);
+  }
+
+  @Post('single')
   @ApiCreatedResponse({ type: Answer })
   @UseGuards(AuthGuard('jwt'))
   create(@Body() createAnswerDto: CreateAnswerDto) {

@@ -2,7 +2,10 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { QuizzesService } from 'src/quizzes/quizzes.service';
 import { Repository } from 'typeorm';
-import { CreateAnswerDto } from './dto/create-answer.dto';
+import {
+  CreateAnswerDto,
+  CreateMultipleAnswersDto
+} from './dto/create-answer.dto';
 import { UpdateAnswerDto } from './dto/update-answer.dto';
 import { Answer } from './entities/answer.entity';
 
@@ -13,6 +16,19 @@ export class AnswersService {
     private answerRepository: Repository<Answer>,
     private quizzesService: QuizzesService
   ) {}
+
+  async createMultipleAnswers(
+    createMultipleAnswersDto: CreateMultipleAnswersDto
+  ): Promise<void> {
+    createMultipleAnswersDto.answers.forEach(a => {
+      const { answer, correct } = a;
+      this.create({
+        quizId: createMultipleAnswersDto.quizId,
+        answer,
+        correct
+      });
+    });
+  }
 
   async create(createAnswerDto: CreateAnswerDto): Promise<Answer> {
     const answer = new Answer();
