@@ -46,9 +46,9 @@ export class AnswersController {
     return this.answersService.findAll();
   }
 
-  @Get()
+  @Get('quiz/:quizId')
   @ApiOkResponse({ type: [Answer] })
-  findAnswersByQuizId(@Query('quizId') quizId: string) {
+  findAnswersByQuizId(@Param('quizId') quizId: string) {
     return this.answersService.findAnswersByQuizId(+quizId);
   }
 
