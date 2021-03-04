@@ -45,6 +45,12 @@ export class AnswersService {
     return this.answerRepository.find();
   }
 
+  async findAnswersByQuizId(quizId: number): Promise<Answer[]> {
+    const quiz = await this.quizzesService.findOne(quizId);
+    const answers = await this.answerRepository.find({ quiz });
+    return answers;
+  }
+
   async findOne(id: number): Promise<Answer> {
     const answer = await this.answerRepository.findOne(id);
     if (!answer) {

@@ -6,7 +6,8 @@ import {
   Put,
   Param,
   Delete,
-  UseGuards
+  UseGuards,
+  Query
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
@@ -43,6 +44,12 @@ export class AnswersController {
   @ApiOkResponse({ type: [Answer] })
   findAll() {
     return this.answersService.findAll();
+  }
+
+  @Get()
+  @ApiOkResponse({ type: [Answer] })
+  findAnswersByQuizId(@Query('quizId') quizId: string) {
+    return this.answersService.findAnswersByQuizId(+quizId);
   }
 
   @Get(':id')
