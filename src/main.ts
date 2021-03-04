@@ -7,6 +7,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   app.enableCors();
+  app.setGlobalPrefix('api/v0/main-backend');
 
   const config = new DocumentBuilder()
     .setTitle('Quiz App')
@@ -28,6 +29,6 @@ async function bootstrap() {
     }
   });
 
-  await app.listen(8000);
+  await app.listen(8080);
 }
 bootstrap();

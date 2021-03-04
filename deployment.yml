@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: quiz-app-main-backend
+  labels:
+    app: quiz-app-main-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: quiz-app-main-backend
+  template:
+    metadata:
+      labels:
+        app: quiz-app-main-backend
+    spec:
+      containers:
+        - name: quiz-app-main-backend
+          image: noyan09/quiz-app-main-backend
+          ports:
+            - containerPort: 8080
+          env:
+            - name: DB_PATH
+              valueFrom:
+                configMapKeyRef:
+                  name: env-config
+                  key: DB_PATH
+            - name: AUTH0_ISSUER_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: env-config
+                  key: AUTH0_ISSUER_URL
+            - name: AUTH0_AUDIENCE
+              valueFrom:
+                configMapKeyRef:
+                  name: env-config
+                  key: AUTH0_AUDIENCE
+            - name: GET_SIGNED_URL_PATH
+              valueFrom:
+                configMapKeyRef:
+                  name: env-config
+                  key: GET_SIGNED_URL_PATH
+      restartPolicy: Always
