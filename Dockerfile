@@ -10,4 +10,4 @@ COPY dist .
 
 EXPOSE 8080
 
-CMD [ "npm", "run", "start:prod" ]
+CMD [ "node", "main.js" ]
