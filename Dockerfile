@@ -6,8 +6,10 @@ COPY package*.json ./
 
 RUN npm i
 
-COPY dist .
+COPY . .
+
+RUN npm run build
 
 EXPOSE 8080
 
-CMD [ "node", "main.js" ]
+CMD [ "npm", "run", "start:prod" ]
