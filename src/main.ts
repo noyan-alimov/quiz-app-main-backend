@@ -6,7 +6,9 @@ import { AppModule } from './app.module';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  app.enableCors();
+  app.enableCors({
+    origin: 'https://msa-landing-page.web.app/'
+  });
   app.setGlobalPrefix('api/v0/main-backend');
 
   const config = new DocumentBuilder()
