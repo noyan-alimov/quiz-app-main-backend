@@ -1,6 +1,7 @@
 # Quiz App
 
-Main Backend that interacts with the Database and handles Authentication
+Main Backend that interacts with the Database and handles Authentication.
+[App Link](https://quiz-app-frontend-fqdpa.ondigitalocean.app/)
 
 ## Features
 
@@ -16,4 +17,5 @@ Main Backend that interacts with the Database and handles Authentication
 
 ### Deployment
 
-Deployed to AWS EKS
+Deployed to AWS EKS.
+But, due to Auth0 being able to work only with HTTPS, deployed to Digital Ocean as there is little to no effort to setup HTTPS there.
